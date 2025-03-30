@@ -94,50 +94,100 @@ class AccelerationType(Enum):
 @dataclass
 class StyleParameters:
     """Parameters defining a musical style for beat generation with consciousness enhancement."""
+    # Basic style identification
+    style_name: str = "default"         # Unique identifier for the style
+    style_category: str = "general"     # Genre category (electronic, urban, ambient, etc.)
+    style_era: str = "contemporary"     # Historical era of the style
+    style_mood: str = "neutral"         # Overall mood/feeling of the style
+    style_energy_level: float = 0.5     # Overall energy level (0.0-1.0)
+    style_origin_culture: str = "global" # Cultural origin of the style
+    
     # Rhythmic parameters
     tempo_range: Tuple[float, float] = (60.0, 180.0)
     time_signature: Tuple[int, int] = (4, 4)
-    rhythm_syncopation: float = 0.4  # Level of rhythmic complexity/off-beat emphasis
-    groove_intensity: float = 0.5    # Amount of swing/groove feeling
-    polyrhythm_factor: float = 0.3   # Complexity of overlapping rhythms
+    rhythm_syncopation: float = 0.4     # Level of rhythmic complexity/off-beat emphasis
+    groove_intensity: float = 0.5       # Amount of swing/groove feeling
+    polyrhythm_factor: float = 0.3      # Complexity of overlapping rhythms
+    beat_emphasis: List[float] = None   # Emphasis pattern across beats (e.g. [1.0, 0.5, 0.7, 0.4])
+    micro_timing_style: str = "natural" # Style of micro-timing deviations (mechanical, natural, groove)
+    percussion_density: float = 0.5     # Density of percussion elements
+    percussion_variation: float = 0.5   # Variation in percussion patterns
+    rhythm_swing_style: str = "straight" # Type of swing (straight, triplet, dotted, shuffle)
     
     # Energy and intensity
-    complexity: float = 0.5          # Overall complexity on 0.0-1.0 scale
-    energy_profile: List[float] = None  # Energy distribution over time
-    dynamic_range: float = 0.7       # Difference between quietest and loudest parts
+    complexity: float = 0.5            # Overall complexity on 0.0-1.0 scale
+    energy_profile: List[float] = None # Energy distribution over time
+    dynamic_range: float = 0.7         # Difference between quietest and loudest parts
     tension_progression: List[float] = None  # Buildup/release patterns
+    transient_density: float = 0.5     # Density of transient events
+    climax_position: float = 0.75      # Relative position of energy peak (0.0-1.0)
+    drop_intensity: float = 0.7        # Intensity of energy drops
     
     # Harmonic and tonal characteristics
-    harmonic_intensity: float = 0.5  # Richness of harmonic content
-    tonal_center: Optional[str] = None  # Key center, e.g., "C", "F#"
-    scale_type: str = "chromatic"    # Scale/mode: major, minor, dorian, etc.
-    chord_complexity: float = 0.4    # Complexity of chord progressions
+    harmonic_intensity: float = 0.5    # Richness of harmonic content
+    tonal_center: Optional[str] = None # Key center, e.g., "C", "F#"
+    scale_type: str = "chromatic"      # Scale/mode: major, minor, dorian, etc.
+    chord_complexity: float = 0.4      # Complexity of chord progressions
+    chord_progression: List[str] = None # Specific chord progression for the style
+    melodic_range: Tuple[int, int] = (48, 84)  # MIDI note range for melodies
+    bass_register: Tuple[int, int] = (24, 48)  # MIDI note range for bass elements
+    harmonic_rhythm: float = 0.5       # Rate of harmonic change
+    modal_interchange: float = 0.2     # Use of modal interchange/borrowed chords
+    dissonance_level: float = 0.3      # Level of harmonic dissonance
     
     # Frequency and spectral properties
     frequency_ranges: Dict[str, Tuple[float, float]] = None  # Key frequency bands
     spectral_balance: Dict[str, float] = None  # EQ curve profile
-    spectral_flux: float = 0.3       # Rate of spectral change over time
+    spectral_flux: float = 0.3         # Rate of spectral change over time
+    low_end_character: str = "balanced" # Character of low frequencies (tight, deep, rounded, etc.)
+    mid_range_presence: float = 0.5    # Presence of mid-range frequencies
+    high_end_brilliance: float = 0.5   # Brightness of high frequencies
+    harmonic_saturation: float = 0.3   # Level of harmonic distortion/saturation
+    resonance_peaks: List[float] = None # Key resonant frequency points
     
     # Consciousness enhancement parameters
-    consciousness_depth: float = 0.7    # Depth of consciousness effect
+    consciousness_depth: float = 0.7   # Depth of consciousness effect
     quantum_coherence_factor: float = 0.3  # Quantum alignment strength
     golden_ratio_alignment: float = 0.618  # Use of golden ratio in structures
-    fractal_dimension: float = 1.37      # Natural fractal dimension for organic feel
-    phi_harmonic_structure: bool = True  # Use phi-based harmonic structures
-    solfeggio_integration: bool = True   # Integrate solfeggio frequencies
+    fractal_dimension: float = 1.37    # Natural fractal dimension for organic feel
+    phi_harmonic_structure: bool = True # Use phi-based harmonic structures
+    solfeggio_integration: bool = True # Integrate solfeggio frequencies
     schumann_resonance_align: bool = True  # Align with Earth's resonance
+    sacred_geometry_pattern: str = "phi"  # Sacred geometry pattern to use (phi, fibonacci, etc.)
+    manifestation_frequency: float = 432.0  # Primary manifestation frequency
+    consciousness_state_target: str = "balanced"  # Target state (focus, creativity, flow, etc.)
     
     # Emotional and mental state parameters
     emotional_attunement: Dict[str, float] = None  # Targeted emotions
     mental_state_targeting: Dict[str, float] = None  # Targeted mental states
     subliminal_triggers: Dict[str, float] = None  # Subliminal programming (subtle)
     manifestation_intention: Optional[str] = None  # Specific manifestation focus
+    mood_progression: List[str] = None  # Progression of moods throughout the piece
+    emotional_arc: str = "rising"     # Emotional journey pattern (rising, falling, wave, etc.)
+    psychological_effect: str = "neutral"  # Primary psychological effect
     
     # Timbre and sound design
     timbre_profile: Dict[str, float] = None  # Characteristics of sound
-    texture_density: float = 0.5     # Density of sound layers
-    transient_sharpness: float = 0.6  # Attack characteristic of sounds
+    texture_density: float = 0.5       # Density of sound layers
+    transient_sharpness: float = 0.6   # Attack characteristic of sounds
     space_dimensions: Tuple[float, float, float] = (0.7, 0.5, 0.3)  # Width, depth, height
+    granularity: float = 0.3           # Micro-texture granularity
+    instrument_palette: List[str] = None  # Primary instruments used in the style
+    sound_character: str = "balanced"  # Overall character (warm, bright, crisp, etc.)
+    stereo_field_usage: str = "balanced"  # Use of stereo field (narrow, wide, dynamic)
+    reverb_character: str = "medium"   # Reverb characteristics (small, large, long, etc.)
+    delay_usage: float = 0.3           # Use of delay effects
+    modulation_depth: float = 0.2      # Depth of modulation effects
+    
+    # Production and mixing characteristics
+    compression_style: str = "balanced"  # Compression approach (subtle, punchy, glued, etc.)
+    mixing_clarity: float = 0.7         # Clarity/separation in the mix
+    bass_treatment: str = "balanced"    # Treatment of bass (tight, boomy, etc.)
+    drum_processing: str = "balanced"   # Processing style for drums (dry, processed, etc.)
+    master_chain_character: str = "clean"  # Mastering approach (clean, warm, loud, etc.)
+    dynamics_processing: float = 0.5    # Amount of dynamics processing
+    sample_rate_reductions: float = 0.0 # Level of intentional sample rate/bit reductions
+    analog_emulation: float = 0.3       # Level of analog warmth/character emulation
     
     def __post_init__(self):
         """Initialize default values for complex parameters."""
@@ -2477,11 +2527,11 @@ class NeuralBeatArchitect:
         
         # Combine all consciousness metrics with phi-weighted importance
         # This creates a unified consciousness field measurement according to sacred geometry principles
-        
-        # Use default values for missing metrics to ensure calculation robustness
-        if not band_alignments:
-            band_alignments = [0.5]  # Default mid-level alignment
-        if not sacred_resonances:
+        if apply_mastering:
+            # Apply mastering with consciousness enhancement
+            beat_pattern = self._apply_mastering(beat_pattern, consciousness_level, enhance_consciousness)
+            
+        # Apply neural variation if requested
             sacred_resonances = [0.4]  # Default mid-low resonance
         if not phi_alignments:
             phi_alignments = [0.618]  # Default golden ratio alignment
@@ -3434,6 +3484,14 @@ class NeuralBeatArchitect:
     def _analyze_beat_quality(self, audio_data: np.ndarray, consciousness_level: float = 0.8) -> Dict[str, Any]:
         """
         Analyze beat quality with comprehensive consciousness-enhanced metrics.
+        
+        Args:
+            audio_data: Audio data to analyze
+            consciousness_level: Consciousness enhancement level (0.0-1.0), default 0.8
+            
+        Returns:
+            Dictionary containing quality metrics enhanced with sacred geometry principles
+        """
         
     def _evaluate_field_coherence(self, audio_data: np.ndarray, consciousness_level: float) -> float:
         """

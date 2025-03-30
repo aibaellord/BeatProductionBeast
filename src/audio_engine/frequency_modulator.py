@@ -2,193 +2,17 @@
 Frequency Modulation Module
 
 This module provides frequency modulation capabilities for consciousness enhancement,
-including binaural beats generation and brainwave entrainment.
+including binaural beats generation and brainwave entrainment with advanced sacred geometry principles.
 """
 
 import numpy as np
-from typing import Dict, List, Tuple, Optional, Union
+from typing import Dict, List, Tuple, Optional, Union, Callable
 import logging
 from enum import Enum
 import math
 
 from .core import AudioProcessor
-
-class BrainwaveFrequency(Enum):
-    """Enum for common brainwave frequency ranges"""
-    DELTA = (0.5, 4)     # Deep sleep, healing
-    THETA = (4, 8)       # Meditation, creativity
-    ALPHA = (8, 13)      # Relaxation, calmness
-    BETA = (13, 30)      # Focus, alertness
-    GAMMA = (30, 100)    # Higher processing, consciousness
-    LAMBDA = (100, 200)  # Advanced consciousness states
-    EPSILON = (200, 400) # Hyperdimensional awareness
-
-class SolfeggioFrequency(Enum):
-    """Enum for sacred Solfeggio frequencies"""
-    UT = 396.0   # Liberating guilt and fear
-    RE = 417.0   # Undoing situations and facilitating change
-    MI = 528.0   # Transformation and miracles, DNA repair
-    FA = 639.0   # Connecting/relationships
-    SOL = 741.0  # Awakening intuition
-    LA = 852.0   # Returning to spiritual order
-    SI = 963.0   # Awakening to perfect state, divine consciousness
-
-class FrequencyModulator:
-    """
-    Handles frequency modulation techniques for consciousness enhancement.
-    
-    This class provides methods for generating and modulating frequencies based on
-    brainwave entrainment research, sacred geometry, and consciousness enhancement
-    principles.
-    
-    Attributes:
-        audio_processor (AudioProcessor): The underlying audio processor
-        sacred_ratios (Dict[str, float]): Dictionary of sacred geometry ratios
-        logger (logging.Logger): Logger instance for this class
-    """
-    
-    def __init__(self, audio_processor: AudioProcessor):
-        """
-        Initialize the FrequencyModulator.
-        
-        Args:
-            audio_processor: An instance of AudioProcessor to handle audio generation
-        """
-        self.audio_processor = audio_processor
-        self.logger = logging.getLogger(__name__)
-        
-        # Sacred geometry ratios
-        self.sacred_ratios = {
-            "phi": (1 + 5 ** 0.5) / 2,  # Golden ratio
-            "pi": math.pi,
-            "e": math.e,
-            "sqrt2": 2 ** 0.5,
-            "sqrt3": 3 ** 0.5,
-            "sqrt5": 5 ** 0.5
-        }
-        
-        self.logger.info("FrequencyModulator initialized with sacred geometry ratios")
-    
-    def generate_binaural_beat(self, 
-                              base_frequency: float, 
-                              beat_frequency: float, 
-                              duration: float,
-                              amplitude: float = 0.8) -> np.ndarray:
-        """
-        Generate a binaural beat audio signal.
-        
-        A binaural beat is produced by playing two slightly different frequencies
-        in each ear, causing the brain to perceive a third "beat" frequency.
-        
-        Args:
-            base_frequency: Base frequency in Hz
-            beat_frequency: Desired beat frequency in Hz
-            duration: Duration of the audio in seconds
-            amplitude: Amplitude of the waveform (0.0 to 1.0)
-            
-        Returns:
-            np.ndarray: Stereo audio data with binaural beat
-        """
-        self.logger.info(f"Generating binaural beat with base {base_frequency}Hz, "
-                        f"beat frequency {beat_frequency}Hz, duration {duration}s")
-        
-        # Calculate the frequencies for left and right channels
-        left_freq = base_frequency
-        right_freq = base_frequency + beat_frequency
-        
-        # Generate each channel separately
-        num_samples = int(self.audio_processor.sample_rate * duration)
-        t = np.linspace(0, duration, num_samples, False)
-        
-        left_channel = amplitude * np.sin(2 * np.pi * left_freq * t)
-        right_channel = amplitude * np.sin(2 * np.pi * right_freq * t)
-        
-        # Combine into stereo
-        stereo_audio = np.column_stack((left_channel, right_channel))
-        
-        return stereo_audio
-    
-    def apply_frequency_modulation(self,
-                                 carrier_signal: np.ndarray,
-                                 modulating_frequency: float,
-                                 modulation_index: float = 1.0) -> np.ndarray:
-        """
-        Apply frequency modulation to a carrier signal.
-        
-        Args:
-            carrier_signal: The audio signal to modulate
-            modulating_frequency: Frequency of the modulating signal in Hz
-            modulation_index: Intensity of modulation (0.0 to 10.0)
-            
-        Returns:
-            np.ndarray: Frequency modulated audio signal
-        """
-        self.logger.debug(f"Applying frequency modulation with {modulating_frequency}Hz, "
-                         f"index {modulation_index}")
-        
-        # Get time base
-        num_samples = carrier_signal.shape[0]
-        duration = num_samples / self.audio_processor.sample_rate
-        t = np.linspace(0, duration, num_samples, False)
-        
-        # Create modulation signal
-        mod_signal = modulation_index * np.sin(2 * np.pi * modulating_frequency * t)
-        
-        # Apply modulation (different approach for mono vs stereo)
-        if len(carrier_signal.shape) == 1:  # Mono
-            return np.sin(2 * np.pi * t + mod_signal)
-        else:  # Stereo
-            left_channel = np.sin(2 * np.pi * t + mod_signal)
-            right_channel = np.sin(2 * np.pi * t + mod_signal)
-            return np.column_stack((left_channel, right_channel))
-    
-    def generate_brainwave_entrainment(self,
-                                     target_state: BrainwaveFrequency,
-                                     duration: float,
-                                     include_harmonics: bool = True) -> np.ndarray:
-        """
-        Generate brainwave entrainment audio for a target mental state.
-        
-        Args:
-            target_state: Target brainwave state from BrainwaveFrequency enum
-            duration: Duration of the audio in seconds
-            include_harmonics: Whether to include harmonics of the base frequency
-            
-        Returns:
-            np.ndarray: Audio data designed for brainwave entrainment
-        """
-        self.logger.info(f"Generating brainwave entrainment for {target_state.name} state, "
-                        f"duration {duration}s")
-        
-        # Get the frequency range for the target state
-        min_freq, max_freq = target_state.value
-        
-        # Choose a frequency in that range
-        # For entrainment, often the middle or lower end of the range is used
-        base_freq = min_freq + (max_freq - min_freq) * 0.4
-        
-        streams = []
-        
-        # Generate the base binaural beat
-        binaural = self.generate_binaural_beat(
-            base_frequency=200,  # Carrier frequency
-            beat_frequency=base_freq,
-            duration=duration
-        )
-
-"""
-FrequencyModulator - Advanced frequency modulation for consciousness enhancement.
-
-This module provides tools for generating binaural beats, implementing brainwave entrainment,
-and working with sacred geometry and Solfeggio frequencies for audio processing.
-"""
-
-import numpy as np
-import math
-from typing import Dict, List, Tuple, Optional, Union
-from enum import Enum
-
-
+from src.utils.sacred_geometry_core import SacredGeometryCore
 
 class BrainwaveRange(Enum):
     """Brainwave frequency ranges associated with different mental states."""
@@ -220,6 +44,7 @@ class SacredGeometryRatio(Enum):
     SQRT3 = math.sqrt(3)     # Altitude of an equilateral triangle
     SQRT5 = math.sqrt(5)     # Diagonal of a golden rectangle
     FIBONACCI_RATIO = 0.618033988749895  # 1/φ
+    SCHUMANN = 7.83          # Earth's resonant frequency
 
 
 class FrequencyModulator:

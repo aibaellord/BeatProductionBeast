@@ -41,5 +41,12 @@ setup(
     generate unique and compelling musical content.
     """,
     long_description_content_type="text/markdown",
+    entry_points={
+        'console_scripts': [
+            'beatbeast=src.cli:main',
+            'beatbeast-generate=src.beat_generation.cli:main',
+            'beatbeast-analyze=src.style_analysis.cli:main',
+        ],
+    },
 )
 
