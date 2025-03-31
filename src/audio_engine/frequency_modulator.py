@@ -397,7 +397,7 @@ class FrequencyModulator:
             for i, chakra in enumerate(chakras):
                 frequency = self._get_chakra_frequency(chakra)
                 chakra_audio = self.generate_pure_tone(frequency, duration_per_chakra - transition_duration)
-                
+                # Check if this is not the last chakra
                 if i < len(chakras) - 1:
                     # Generate transition to next chakra
                     next_frequency = self._get_chakra_frequency(chakras[i+1])
@@ -419,3 +419,339 @@ class FrequencyModulator:
                 full_sequence = np.concatenate([full_sequence, chakra_audio])
             
             return full_sequence
+
+    def enhance_harmonics(
+        self,
+        audio: np.ndarray,
+        strength: float = 0.5,
+        harmonic_profile: str = 'golden',
+        preserve_timbre: bool = True
+    ) -> np.ndarray:
+        """
+        Enhance the harmonic content of audio with phi-optimized processing.
+        
+        This method analyzes the spectral content of the audio and enhances
+        harmonically related frequencies based on sacred geometry principles.
+        
+        Args:
+            audio: Input audio array (can be mono or stereo)
+            strength: Enhancement strength (0.0-1.0)
+            harmonic_profile: Type of harmonic profile to apply ('golden', 'fibonacci', 'chakra')
+            preserve_timbre: Whether to preserve the original timbre while enhancing harmonics
+            
+        Returns:
+            Audio with enhanced harmonic content
+        """
+        # Clamp strength parameter
+        strength = max(0.0, min(1.0, strength))
+        
+        # Check if input is stereo (2D) or mono (1D)
+        is_stereo = len(audio.shape) > 1 and audio.shape[1] == 2
+        
+        if is_stereo:
+            # Process each channel separately
+            left_channel = audio[:, 0]
+            right_channel = audio[:, 1]
+            
+            left_enhanced = self._enhance_channel_harmonics(
+                left_channel, strength, harmonic_profile, preserve_timbre
+            )
+            right_enhanced = self._enhance_channel_harmonics(
+                right_channel, strength, harmonic_profile, preserve_timbre
+            )
+            
+            # Recombine channels
+            return np.column_stack((left_enhanced, right_enhanced))
+        else:
+            # Process mono audio
+            return self._enhance_channel_harmonics(
+                audio, strength, harmonic_profile, preserve_timbre
+            )
+    
+    def _enhance_channel_harmonics(
+        self, 
+        channel: np.ndarray, 
+        strength: float,
+        harmonic_profile: str,
+        preserve_timbre: bool
+    ) -> np.ndarray:
+        """
+        Enhance harmonics for a single audio channel.
+        
+        Args:
+            channel: Single channel audio data
+            strength: Enhancement strength
+            harmonic_profile: Type of harmonic profile
+            preserve_timbre: Whether to preserve original timbre
+            
+        Returns:
+            Enhanced single channel audio
+        """
+        # Calculate FFT
+        n_fft = min(8192, len(channel))
+        hop_length = n_fft // 4
+        
+        # Use simple overlapping windows for processing
+        enhanced_audio = np.zeros_like(channel)
+        window = np.hanning(n_fft)
+        
+        # Process each frame
+        for i in range(0, len(channel) - n_fft, hop_length):
+            # Extract frame and apply window
+            frame = channel[i:i+n_fft] * window
+            
+            # Calculate spectrum
+            spectrum = np.fft.rfft(frame)
+            magnitude = np.abs(spectrum)
+            phase = np.angle(spectrum)
+            
+            # Apply harmonic enhancement
+            enhanced_magnitude = self._apply_harmonic_enhancement(
+                magnitude, strength, harmonic_profile
+            )
+            
+            # If preserving timbre, use a blend of original and enhanced magnitudes
+            if preserve_timbre:
+                blend_factor = 0.3 + (0.7 * strength)  # Adjust based on strength
+                enhanced_magnitude = (
+                    (1 - blend_factor) * magnitude + 
+                    blend_factor * enhanced_magnitude
+                )
+            
+            # Reconstruct spectrum and convert back to time domain
+            enhanced_spectrum = enhanced_magnitude * np.exp(1j * phase)
+            enhanced_frame = np.fft.irfft(enhanced_spectrum)
+            
+            # Overlap-add to output
+            enhanced_audio[i:i+n_fft] += enhanced_frame
+        
+        # Normalize to prevent clipping
+        max_amplitude = np.max(np.abs(enhanced_audio))
+        if max_amplitude > 0.99:
+            enhanced_audio = enhanced_audio * (0.99 / max_amplitude)
+        
+        return enhanced_audio
+    
+    def _apply_harmonic_enhancement(
+        self,
+        magnitude: np.ndarray,
+        strength: float,
+        profile: str
+    ) -> np.ndarray:
+        """
+        Apply harmonic enhancement to magnitude spectrum.
+        
+        Args:
+            magnitude: Magnitude spectrum
+            strength: Enhancement strength
+            profile: Harmonic profile type
+            
+        Returns:
+            Enhanced magnitude spectrum
+        """
+        enhanced = np.copy(magnitude)
+        n_bins = len(magnitude)
+        
+        # Find strongest frequency components
+        peaks = []
+        for i in range(1, n_bins - 1):
+            if magnitude[i] > magnitude[i-1] and magnitude[i] > magnitude[i+1]:
+                if magnitude[i] > 0.1 * np.max(magnitude):  # Threshold
+                    peaks.append(i)
+        
+        # Limit the number of peaks we consider
+        if len(peaks) > 20:
+            # Sort by magnitude and take the strongest ones
+            peaks.sort(key=lambda x: magnitude[x], reverse=True)
+            peaks = peaks[:20]  # Take top 20
+        
+        # Apply different harmonic profiles
+        if profile == 'golden':
+            ratio = self.sacred_geometry_map['phi']
+            boost_factor = 2.0 * strength
+        elif profile == 'fibonacci':
+            fib_sequence = [1, 1, 2, 3, 5, 8, 13, 21]
+            ratio = 1.0  # Will use fibonacci sequence directly
+            boost_factor = 2.5 * strength
+        elif profile == 'chakra':
+            # Use chakra frequency relationships
+            ratio = 1.125  # Musical fifth relationship
+            boost_factor = 1.8 * strength
+        else:
+            # Default to phi-based
+            ratio = self.sacred_geometry_map['phi']
+            boost_factor = 2.0 * strength
+        
+        # Enhance harmonics for each detected peak
+        for peak in peaks:
+            if peak == 0:
+                continue  # Skip DC component
+                
+            if profile == 'fibonacci':
+                # Enhance at fibonacci multipliers
+                for fib in fib_sequence[2:]:  # Skip first two (1, 1)
+                    harmonic_bin = int(peak * fib)
+                    if 0 < harmonic_bin < n_bins:
+                        # Boost the harmonic with tapering strength
+                        boost = boost_factor * (1.0 / fib) * magnitude[peak]
+                        # Apply smooth window around the harmonic
+                        window_size = 3
+                        for w in range(-window_size, window_size + 1):
+                            if 0 <= harmonic_bin + w < n_bins:
+                                window_weight = 1.0 - (abs(w) / (window_size + 1))
+                                enhanced[harmonic_bin + w] += boost * window_weight
+            else:
+                # For golden ratio and other profiles
+                # Calculate harmonic series based on the profile
+                for h in range(2, 8):  # Harmonics 2 through 7
+                    # Calculate frequency bin for this harmonic
+                    if profile == 'chakra':
+                        harmonic_bin = int(peak * h)  # Integer harmonics for chakra
+                    else:
+                        harmonic_bin = int(peak * ratio * h)
+                        
+                    if 0 < harmonic_bin < n_bins:
+                        # Calculate boost amount (decreasing with harmonic number)
+                        boost = boost_factor * (1.0 / h) * magnitude[peak]
+                        
+                        # Apply smooth window around the harmonic
+                        window_size = 3
+                        for w in range(-window_size, window_size + 1):
+                            if 0 <= harmonic_bin + w < n_bins:
+                                window_weight = 1.0 - (abs(w) / (window_size + 1))
+                                enhanced[harmonic_bin + w] += boost * window_weight
+        
+        # Apply sacred geometry enhancement curve
+        phi = self.sacred_geometry_map['phi']
+        inv_phi = self.sacred_geometry_map['inverse_phi']
+        
+        # Apply overall spectral shaping based on sacred geometry
+        for i in range(n_bins):
+            # Create phi-based curve that enhances certain frequency regions
+            position = i / n_bins
+            sacred_curve = 1.0 + (0.2 * strength * np.sin(2 * np.pi * phi * position)**2)
+            
+            # Apply additional enhancement at golden ratio points in spectrum
+            for j in range(1, 4):  # Several phi-related points
+                phi_point = inv_phi * j
+                if abs(position - phi_point) < 0.05:  # Within 5% of phi points
+                    sacred_curve += 0.15 * strength * (1.0 - abs(position - phi_point) / 0.05)
+            
+            enhanced[i] *= sacred_curve
+        
+        return enhanced
+        
+    def _get_chakra_frequency(self, chakra: str) -> float:
+        """
+        Get the frequency for a specific chakra.
+        
+        Args:
+            chakra: Name of the chakra (root, sacral, solar_plexus, heart, throat, third_eye, crown)
+            
+        Returns:
+            Frequency in Hz for the requested chakra
+        """
+        if chakra not in self.chakra_frequencies:
+            raise ValueError(f"Unknown chakra: {chakra}")
+            
+        return self.chakra_frequencies[chakra]
+        
+    def generate_frequency_transition(
+        self,
+        start_frequency: float,
+        end_frequency: float,
+        duration: float,
+        volume: float = 0.5,
+        transition_curve: str = 'exponential'
+    ) -> np.ndarray:
+        """
+        Generate a smooth transition between two frequencies.
+        
+        Args:
+            start_frequency: Starting frequency in Hz
+            end_frequency: Ending frequency in Hz
+            duration: Duration of the transition in seconds
+            volume: Amplitude of the generated audio (0.0-1.0)
+            transition_curve: Type of transition curve ('linear', 'exponential', 'logarithmic', 'sinusoidal')
+            
+        Returns:
+            Audio array containing the frequency transition
+        """
+        num_samples = int(duration * self.sample_rate)
+        t = np.linspace(0, duration, num_samples, False)
+        
+        # Create the transition curve
+        if transition_curve == 'linear':
+            # Linear transition
+            freq_values = np.linspace(start_frequency, end_frequency, num_samples)
+        elif transition_curve == 'logarithmic':
+            # Logarithmic transition (faster at the beginning)
+            log_space = np.logspace(0, 1, num_samples) - 1
+            freq_values = start_frequency + (end_frequency - start_frequency) * (log_space / 9)
+        elif transition_curve == 'sinusoidal':
+            # Sinusoidal transition (smooth S-curve)
+            phase = np.linspace(0, np.pi, num_samples)
+            s_curve = (1 - np.cos(phase)) / 2
+            freq_values = start_frequency + (end_frequency - start_frequency) * s_curve
+        else:  # Default to exponential
+            # Exponential transition (slower at beginning, faster at end)
+            exp_space = np.exp(np.linspace(0, 1, num_samples)) - 1
+            freq_values = start_frequency + (end_frequency - start_frequency) * (exp_space / (np.e - 1))
+        
+        # Use frequency values to compute instantaneous phase
+        phase = np.cumsum(2 * np.pi * freq_values / self.sample_rate)
+        
+        # Generate the waveform using the computed phase
+        audio = volume * np.sin(phase)
+        
+        # Apply fade in/out to avoid clicks
+        fade_samples = min(int(0.01 * self.sample_rate), num_samples // 10)
+        if fade_samples > 0:
+            # Fade in
+            audio[:fade_samples] *= np.linspace(0, 1, fade_samples)
+            # Fade out
+            audio[-fade_samples:] *= np.linspace(1, 0, fade_samples)
+        
+        return audio
+    
+    def generate_pure_tone(
+        self,
+        frequency: float,
+        duration: float,
+        volume: float = 0.5,
+        waveform: str = 'sine'
+    ) -> np.ndarray:
+        """
+        Generate a pure tone at the specified frequency.
+        
+        Args:
+            frequency: Frequency of the tone in Hz
+            duration: Duration of the tone in seconds
+            volume: Amplitude of the generated audio (0.0-1.0)
+            waveform: Type of waveform ('sine', 'square', 'triangle', 'sawtooth')
+            
+        Returns:
+            Audio array containing the pure tone
+        """
+        num_samples = int(duration * self.sample_rate)
+        t = np.linspace(0, duration, num_samples, False)
+        
+        # Generate the waveform
+        if waveform == 'square':
+            audio = volume * np.sign(np.sin(2 * np.pi * frequency * t))
+        elif waveform == 'triangle':
+            audio = volume * (2 / np.pi) * np.arcsin(np.sin(2 * np.pi * frequency * t))
+        elif waveform == 'sawtooth':
+            audio = volume * (2 * (t * frequency - np.floor(0.5 + t * frequency)))
+        else:  # Default to sine
+            audio = volume * np.sin(2 * np.pi * frequency * t)
+        
+        # Apply fade in/out to avoid clicks
+        fade_samples = min(int(0.01 * self.sample_rate), num_samples // 10)
+        if fade_samples > 0:
+            # Fade in
+            audio[:fade_samples] *= np.linspace(0, 1, fade_samples)
+            # Fade out
+            audio[-fade_samples:] *= np.linspace(1, 0, fade_samples)
+        
+        return audio

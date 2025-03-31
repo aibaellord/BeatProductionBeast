@@ -51,6 +51,10 @@ from .math_utils import (
     inverse_fourier_transform,
 )
 
+# Sacred Geometry utilities
+from .sacred_geometry_core import SacredGeometryCore
+from .sacred_geometry_patterns import SacredGeometryPatterns
+
 __all__ = [
     # File utilities
     'load_audio_file',
@@ -85,5 +89,9 @@ __all__ = [
     'apply_window',
     'fourier_transform',
     'inverse_fourier_transform',
+    
+    # Sacred Geometry
+    'SacredGeometryCore',
+    'SacredGeometryPatterns',
 ]
 

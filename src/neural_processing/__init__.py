@@ -9,7 +9,11 @@ model loading, prediction, and feature extraction for audio data.
 from .model_loader import ModelLoader
 from .predictor import Predictor
 from .feature_extractor import FeatureExtractor
+from .quantum_field_processor import MultidimensionalFieldProcessor, ConsciousnessAmplifier
+from .sacred_enhancer import QuantumSacredEnhancer
 
 # Define what's available for import with "from neural_processing import *"
-__all__ = ['ModelLoader', 'Predictor', 'FeatureExtractor']
+__all__ = ['ModelLoader', 'Predictor', 'FeatureExtractor', 
+           'MultidimensionalFieldProcessor', 'ConsciousnessAmplifier',
+           'QuantumSacredEnhancer']
 

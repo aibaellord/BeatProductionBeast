@@ -3687,7 +3687,8 @@ class NeuralBeatArchitect:
                 optimization_score = 0.0
                 comparisons = 0
                 
-                for band, ideal
+                # Calculate neural field optimization
+                # (Code for field comparison was incomplete and causing syntax error)
             "intention_clarity": self._evaluate_intention_clarity(audio_data),
             "reality_impact": self._evaluate_reality_impact(audio_data, consciousness_level),
             "transformation_power": self._evaluate_transformation_power(audio_data)
