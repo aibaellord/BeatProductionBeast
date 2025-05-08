@@ -19,6 +19,7 @@ from audio_engine.frequency_modulator import FrequencyModulator
 from neural_processing.sacred_coherence import SacredCoherenceProcessor
 from content.youtube_content_manager import YouTubeContentManager
 from revenue.revenue_integration import RevenueIntegration
+from src.beat_production_workflow import BeatProductionWorkflow
 
 
 def generate_sacred_beat(sacred_geo, freq_modulator, consciousness_level=7, genre="ambient"):
@@ -167,6 +168,25 @@ def setup_multi_stream_revenue(beat_data, youtube_data, revenue_manager):
     }
 
 
+def run_fully_automated_orchestration(style, user_id=None):
+    """
+    Demonstrate the fully automated, end-to-end pipeline with orchestration:
+    - Beat generation, enhancement, mastering, quality control, A/B testing
+    - Auto-publishing to Quantum Collab Universe, Sync Marketplace, Remix Challenge
+    - Revenue tracking, analytics, notifications
+    - All steps logged and surfaced for transparency
+    """
+    print("\n🚀 Running fully automated orchestration pipeline...")
+    workflow = BeatProductionWorkflow()
+    result = workflow.run_fully_automated_pipeline(style, user_id=user_id)
+    if result.success:
+        print("✓ Pipeline complete! Variations and metadata:")
+        print(result.variations)
+        print(result.metadata)
+    else:
+        print(f"❌ Pipeline failed: {result.error}")
+
+
 def main():
     """Main function demonstrating the complete beat production system"""
     print("═" * 80)
@@ -198,6 +218,9 @@ def main():
         
         # Set up revenue streams
         revenue_data = setup_multi_stream_revenue(enhanced_beat, youtube_data, revenue_manager)
+        
+        # Optionally run the fully automated orchestration demo
+        run_fully_automated_orchestration({"style": "meditation", "consciousness_level": 8}, user_id="demo_user_001")
         
         print("\n" + "═" * 80)
         print("✅ COMPLETE SACRED GEOMETRY WORKFLOW DEMONSTRATED")

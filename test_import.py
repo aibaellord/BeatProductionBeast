@@ -90,3 +90,10 @@ def run_import_tests():
 if __name__ == "__main__":
     run_import_tests()
 
+    # Minimal test script to verify import of TonalAdjuster
+    try:
+        from src.harmonic_enhancement.tonal_adjuster import TonalAdjuster
+        print("TonalAdjuster imported successfully.")
+    except ImportError as e:
+        print(f"Failed to import TonalAdjuster: {e}")
+
