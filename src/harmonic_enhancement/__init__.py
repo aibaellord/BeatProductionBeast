@@ -14,6 +14,7 @@ try:
     from .progression_generator import ProgressionGenerator
     from .harmonic_filter import HarmonicFilter
     from .pitch_corrector import PitchCorrector
+    from .tonal_adjuster import TonalAdjuster
 except ImportError as e:
     import warnings
     warnings.warn(f"Some harmonic_enhancement components could not be imported: {e}")
@@ -26,6 +27,7 @@ __all__ = [
     'ProgressionGenerator',
     'HarmonicFilter',
     'PitchCorrector',
+    'TonalAdjuster',
 ]
 
 # Module metadata

@@ -1,0 +1,3 @@
+<!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
+
+This is a cross-platform React Native mobile app for BeatProductionBeast. Use modular, scalable, and type-safe code. Prioritize onboarding, beat generation, preview, sync marketplace, notifications, and smart assistant modules. All features should be easily extensible for future business and AI/ML integrations.

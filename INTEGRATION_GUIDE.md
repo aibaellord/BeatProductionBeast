@@ -228,6 +228,59 @@ const variationBrowser = new VariationBrowser({
 });
 ```
 
+### Step 5: Add Advanced Automation Controls
+
+```html
+<!-- Add to your main UI HTML template -->
+<div class="automation-controls-container" id="automation-controls">
+    <h3>Advanced Automation Controls</h3>
+    <div>
+        <label for="layered-processing">Enable Multi-Layered Processing:</label>
+        <input type="checkbox" id="layered-processing">
+    </div>
+    <div>
+        <label for="adaptive-workflows">Enable Adaptive Workflows:</label>
+        <input type="checkbox" id="adaptive-workflows">
+    </div>
+    <div>
+        <label for="optimization-techniques">Optimization Techniques:</label>
+        <select id="optimization-techniques">
+            <option value="genetic">Genetic Algorithms</option>
+            <option value="annealing">Simulated Annealing</option>
+            <option value="feedback">Real-Time Feedback</option>
+        </select>
+    </div>
+</div>
+```
+
+```javascript
+// Add to your main UI JavaScript
+const automationControls = {
+    layeredProcessing: document.getElementById('layered-processing'),
+    adaptiveWorkflows: document.getElementById('adaptive-workflows'),
+    optimizationTechniques: document.getElementById('optimization-techniques')
+};
+
+// Event listeners for automation controls
+automationControls.layeredProcessing.addEventListener('change', (e) => {
+    console.log('Layered Processing:', e.target.checked);
+    // Update automation pipeline settings
+    automationPipeline.setLayeredProcessing(e.target.checked);
+});
+
+automationControls.adaptiveWorkflows.addEventListener('change', (e) => {
+    console.log('Adaptive Workflows:', e.target.checked);
+    // Update automation pipeline settings
+    automationPipeline.setAdaptiveWorkflows(e.target.checked);
+});
+
+automationControls.optimizationTechniques.addEventListener('change', (e) => {
+    console.log('Selected Optimization Technique:', e.target.value);
+    // Update automation pipeline settings
+    automationPipeline.setOptimizationTechnique(e.target.value);
+});
+```
+
 ## Automation Pipeline
 
 The system provides a fully automated pipeline for processing audio with just one click. Here's how it works:
