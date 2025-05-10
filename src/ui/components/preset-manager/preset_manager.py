@@ -1,13 +1,14 @@
-import os
 import json
 import logging
-from typing import List, Dict, Any, Optional, Callable, Tuple
+import os
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
-from src.ui.integration_framework import UIIntegrationFramework
-from src.ui.visualization_engine import VisualizationEngine
+from src.config_manager import ConfigManager
 from src.preset.preset_model import Preset, PresetCategory
 from src.preset.preset_repository import PresetRepository
-from src.config_manager import ConfigManager
+from src.ui.integration_framework import UIIntegrationFramework
+from src.ui.visualization_engine import VisualizationEngine
+
 
 class PresetManagerUI:
     """

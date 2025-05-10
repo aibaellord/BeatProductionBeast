@@ -1,14 +1,15 @@
-import os
 import json
 import logging
-from typing import Dict, List, Optional, Tuple, Any, Set, Union
-from functools import lru_cache
+import os
 from collections import OrderedDict
+from functools import lru_cache
+from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
 from neural_beat_architect.core.architect import StyleParameters
 from neural_beat_architect.core.style_factory import StyleFactory
-from neural_processing.sacred_coherence import calculate_phi_ratio, apply_sacred_geometry
 from neural_processing.quantum_sacred_enhancer import QuantumSacredEnhancer
+from neural_processing.sacred_coherence import (apply_sacred_geometry,
+                                                calculate_phi_ratio)
 
 logger = logging.getLogger(__name__)
 
@@ -360,19 +361,20 @@ class StyleManagerUI:
         self._style_cache.clear()
         self._memory_usage = 0
 
-import os
 import json
-import time
 import logging
-from typing import Dict, List, Optional, Tuple, Any, Callable
-from functools import lru_cache
-from dataclasses import dataclass, field
+import os
+import time
 import tkinter as tk
-from tkinter import ttk, messagebox
+from dataclasses import dataclass, field
+from functools import lru_cache
+from tkinter import messagebox, ttk
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 # Import StyleFactory to manage styles
 from neural_beat_architect.core.style_factory import StyleFactory
-from neural_processing.sacred_coherence import calculate_phi_ratio, apply_sacred_geometry
+from neural_processing.sacred_coherence import (apply_sacred_geometry,
+                                                calculate_phi_ratio)
 
 # Logging setup
 logging.basicConfig(level=logging.INFO)
@@ -695,16 +697,17 @@ StyleManagerUI - A simplified UI for style management with phi-optimization
 and consciousness level visualization.
 """
 
-import tkinter as tk
-from tkinter import ttk, messagebox
 import threading
 import time
+import tkinter as tk
 from functools import lru_cache
-from typing import Dict, List, Any, Optional, Tuple, Callable
+from tkinter import messagebox, ttk
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
-from src.neural_beat_architect.core.style_factory import StyleFactory
 from src.neural_beat_architect.core.architect import StyleParameters
-from src.neural_processing.sacred_coherence import calculate_phi_ratio, apply_sacred_geometry
+from src.neural_beat_architect.core.style_factory import StyleFactory
+from src.neural_processing.sacred_coherence import (apply_sacred_geometry,
+                                                    calculate_phi_ratio)
 
 
 class StyleManagerUI:
@@ -1018,20 +1021,22 @@ class StyleManagerUI:
             try:
                 self.current
 
-import os
 import json
-import tkinter as tk
-from tkinter import ttk, messagebox
-from typing import Dict, List, Optional, Tuple, Any, Callable
+import os
 import threading
 import time
-from functools import lru_cache
+import tkinter as tk
 from collections import deque
+from functools import lru_cache
+from tkinter import messagebox, ttk
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
+from src.neural_beat_architect.core.architect import StyleParameters
 # Import our style factory and related modules
 from src.neural_beat_architect.core.style_factory import StyleFactory
-from src.neural_beat_architect.core.architect import StyleParameters
-from src.neural_processing.sacred_coherence import calculate_phi_ratio, apply_sacred_geometry
+from src.neural_processing.sacred_coherence import (apply_sacred_geometry,
+                                                    calculate_phi_ratio)
+
 
 class StyleManagerUI:
     """

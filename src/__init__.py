@@ -34,137 +34,96 @@ See individual module documentation for detailed usage information.
 
 __version__ = "0.1.0"
 
-# Neural Beat Architect
-from .neural_beat_architect import (
-    BeatGenerator,
-    StyleModel,
-    GrooveAnalyzer,
-    RhythmPattern
-)
-
 # Audio Engine
-from .audio_engine import (
-    AudioProcessor,
-    SoundGenerator,
-    MixerInterface,
-    WaveformAnalyzer,
-    AudioEffect
-)
-
-# Neural Processing
-from .neural_processing import (
-    ModelLoader,
-    Predictor,
-    FeatureExtractor,
-    NeuralModel
-)
-
+from .audio_engine import (AudioEffect, AudioProcessor, MixerInterface,
+                           SoundGenerator, WaveformAnalyzer)
 # Beat Generation
-from .beat_generation import (
-    BeatMaker,
-    DrumSequencer,
-    LoopGenerator,
-    PatternLibrary
-)
-
+from .beat_generation import (BeatMaker, DrumSequencer, LoopGenerator,
+                              PatternLibrary)
 # Fusion Generator
-from .fusion_generator import (
-    StyleFusion,
-    GenreMerger,
-    CrossGenreAdapter,
-    FusionMatrix
-)
-
+from .fusion_generator import (CrossGenreAdapter, FusionMatrix, GenreMerger,
+                               StyleFusion)
 # Harmonic Enhancement
-from .harmonic_enhancement import (
-    HarmonicAnalyzer,
-    ChordEnhancer,
-    ScaleDetector,
-    TonalAdjuster
-)
-
+from .harmonic_enhancement import (ChordEnhancer, HarmonicAnalyzer,
+                                   ScaleDetector, TonalAdjuster)
+# Neural Beat Architect
+from .neural_beat_architect import (BeatGenerator, GrooveAnalyzer,
+                                    RhythmPattern, StyleModel)
+# Neural Processing
+from .neural_processing import (FeatureExtractor, ModelLoader, NeuralModel,
+                                Predictor)
 # Pattern Recognition
-from .pattern_recognition import (
-    PatternMatcher,
-    RhythmicAnalyzer,
-    PatternDatabase,
-    SignatureDetector
-)
-
+from .pattern_recognition import (PatternDatabase, PatternMatcher,
+                                  RhythmicAnalyzer, SignatureDetector)
 # Style Analysis
-from .style_analysis import (
-    StyleClassifier,
-    GenreIdentifier,
-    FeatureExtraction,
-    StyleMapping
-)
-
+from .style_analysis import (FeatureExtraction, GenreIdentifier,
+                             StyleClassifier, StyleMapping)
 # Utils
-from .utils import (
-    audio_conversion,
-    file_handling,
-    visualization,
-    midi_tools,
-    config
-)
+from .utils import (audio_conversion, config, file_handling, midi_tools,
+                    visualization)
+
 
 # Convenience functions
 def generate_beat(style="default", bpm=120, length=8):
     """
     Generate a new beat with specified style and parameters.
-    
+
     Args:
         style (str): Musical style/genre for the beat
         bpm (int): Beats per minute
         length (int): Length in bars
-        
+
     Returns:
         A generated beat object
     """
     generator = BeatGenerator()
     return generator.create(style=style, bpm=bpm, length=length)
 
+
 def apply_neural_processing(audio_data, model="default", intensity=0.5):
     """
     Apply neural processing to enhance audio data.
-    
+
     Args:
         audio_data: Input audio data
         model (str): Name of the model to use
         intensity (float): Processing intensity (0.0-1.0)
-        
+
     Returns:
         Processed audio data
     """
     processor = NeuralModel(model)
     return processor.process(audio_data, intensity=intensity)
 
+
 def analyze_style(audio_data):
     """
     Analyze the musical style of the provided audio.
-    
+
     Args:
         audio_data: Input audio data
-        
+
     Returns:
         Style analysis results
     """
     analyzer = StyleClassifier()
     return analyzer.classify(audio_data)
 
+
 def enhance_harmonics(audio_data, strength=0.6):
     """
     Enhance the harmonic content of audio data.
-    
+
     Args:
         audio_data: Input audio data
         strength (float): Enhancement strength (0.0-1.0)
-        
+
     Returns:
         Harmonically enhanced audio data
     """
     enhancer = HarmonicAnalyzer()
     return enhancer.enhance(audio_data, strength=strength)
+
 
 """
 BeatProductionBeast - Neural Music Production Tool
@@ -173,54 +132,38 @@ This package provides a comprehensive set of tools for AI-assisted music and bea
 combining neural networks with audio processing capabilities.
 """
 
-__version__ = '0.1.0'
+__version__ = "0.1.0"
 
 # Import main modules for easy access
 try:
     # Neural Beat Architect module
-    from .neural_beat_architect import (
-        BeatGenerator,
-        PatternCreator,
-        RhythmAnalyzer,
-    )
-    
     # Audio Engine module
-    from .audio_engine import (
-        AudioProcessor,
-        SoundGenerator,
-        MixerInterface,
-    )
-    
+    from .audio_engine import AudioProcessor, MixerInterface, SoundGenerator
+    from .neural_beat_architect import (BeatGenerator, PatternCreator,
+                                        RhythmAnalyzer)
     # Neural Processing module
-    from .neural_processing import (
-        ModelLoader,
-        Predictor,
-        FeatureExtractor,
-    )
-    
+    from .neural_processing import FeatureExtractor, ModelLoader, Predictor
+
     # Add other commonly used components here
-    
+
 except ImportError as e:
     import warnings
+
     warnings.warn(f"Some modules could not be imported: {e}")
 
 # Define what is available when using "from beatproductionbeast import *"
 __all__ = [
     # Neural Beat Architect components
-    'BeatGenerator',
-    'PatternCreator',
-    'RhythmAnalyzer',
-    
+    "BeatGenerator",
+    "PatternCreator",
+    "RhythmAnalyzer",
     # Audio Engine components
-    'AudioProcessor',
-    'SoundGenerator',
-    'MixerInterface',
-    
+    "AudioProcessor",
+    "SoundGenerator",
+    "MixerInterface",
     # Neural Processing components
-    'ModelLoader',
-    'Predictor',
-    'FeatureExtractor',
-    
+    "ModelLoader",
+    "Predictor",
+    "FeatureExtractor",
     # Add other exports here
 ]
-

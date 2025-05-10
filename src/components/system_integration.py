@@ -24,18 +24,18 @@ try:
     from src.frequency_manipulation import FrequencyEngine
     from src.generation import BeatGenerator
     from src.neural_optimization import NeuralEngine
-    from src.production import ProductionEngine
-    from src.sacred_geometry import GeometryEngine
-    from src.quantum_harmonics import QuantumEngine
-    
+    from src.preset.beat_variation_generator import BeatVariationGenerator
+    from src.preset.preset_api import register_preset_endpoints
+    from src.preset.preset_manager import PresetManagerUI
     # Import preset components
     from src.preset.preset_model import Preset, PresetTags
     from src.preset.preset_repository import PresetRepository
-    from src.preset.preset_manager import PresetManagerUI
-    from src.preset.preset_api import register_preset_endpoints
-    from src.preset.beat_variation_generator import BeatVariationGenerator
-    from src.preset.quantum_consciousness_engine import QuantumConsciousnessEngine
+    from src.preset.quantum_consciousness_engine import \
+        QuantumConsciousnessEngine
     from src.preset.usability_enhancements import UsabilityEnhancer
+    from src.production import ProductionEngine
+    from src.quantum_harmonics import QuantumEngine
+    from src.sacred_geometry import GeometryEngine
     
 except ImportError as e:
     logging.warning(f"Some modules could not be imported: {e}")

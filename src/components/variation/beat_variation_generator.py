@@ -25,87 +25,93 @@ Created with an 0 invest mindstate to unlock creative potential beyond conventio
 operating at maximum efficiency while optimizing for both technical excellence and emotional impact.
 """
 
-import os
-import time
-import uuid
-import threading
-import queue
 import json
-import traceback
-import shutil
-import random
 import logging
 import math
-from enum import Enum, auto
-from typing import List, Dict, Any, Tuple, Optional, Union, Callable, Generator, Set
+import os
+import queue
+import random
+import shutil
+import threading
+import time
+import traceback
+import uuid
 from dataclasses import dataclass, field
 from datetime import datetime
+from enum import Enum, auto
 from pathlib import Path
+from typing import (Any, Callable, Dict, Generator, List, Optional, Set, Tuple,
+                    Union)
 
+import auraloss
+import essentia
+import essentia.standard as es
+# UI and visualization
+import gradio as gr
 # Audio processing imports
 import librosa
 import librosa.display
-import soundfile as sf
-import numpy as np
-from pydub import AudioSegment
-import pyrubberband as pyrb
 import madmom
-import essentia
-import essentia.standard as es
+import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+import pyrubberband as pyrb
+# Web and download functionality
+import requests
+# Math and signal processing
+import scipy
+import scipy.fftpack
+import scipy.signal
+import soundfile as sf
 import sox
-import auraloss
-
+import sympy
 # Machine learning imports
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchaudio
-import torchaudio.transforms as T
 import torchaudio.functional as F
-from transformers import AutoModel, AutoFeatureExtractor
-
-# Web and download functionality
-import requests
+import torchaudio.transforms as T
+from pydub import AudioSegment
 from pytube import YouTube
+from sklearn import decomposition, manifold
+from tqdm.auto import tqdm
+from transformers import AutoFeatureExtractor, AutoModel
 from yt_dlp import YoutubeDL
 
-# Math and signal processing
-import scipy
-import scipy.signal
-import scipy.fftpack
-import sympy
-import networkx as nx
-import pandas as pd
-import matplotlib.pyplot as plt
-from sklearn import decomposition, manifold
-
-# UI and visualization
-import gradio as gr
-from tqdm.auto import tqdm
-import plotly.graph_objects as go
-import plotly.express as px
-
-# Internal imports
-from src.sacred_geometry import geometry_engine, fibonacci_sequencer, golden_ratio_transformer
-from src.sacred_geometry.platonic_solids import PlatonicSolid, PlatonicTransformer
-from src.consciousness_modulation import frequency_modulator, brainwave_entrainer, emotional_resonance_engine
-from src.consciousness_modulation.solfeggio_frequencies import SolfeggioFrequencyModulator
-from src.neural_optimization import neural_engine, pleasure_response_optimizer, cognitive_enhancer
-from src.neural_optimization.dopamine_circuit_mapper import DopamineResponse
-from src.quantum_entrainment import quantum_processor, quantum_harmonics, dimensional_transformer
-from src.quantum_entrainment.superposition_engine import SuperpositionEngine
-from src.ui.visualization_engine import WaveformVisualizer, SpectrogramVisualizer, ThreeDimensionalAudioVisualizer
-from src.ui.interaction_framework import UICallback, UIComponentManager, UIEventSystem
 from src.config_manager import ConfigManager
-from src.utils.audio_utils import AudioProcessor, FeatureExtractor
-from src.utils.parallel_processor import ParallelTaskProcessor
-from src.utils.memory_optimization import MemoryOptimizer
-
+from src.consciousness_modulation import (brainwave_entrainer,
+                                          emotional_resonance_engine,
+                                          frequency_modulator)
+from src.consciousness_modulation.solfeggio_frequencies import \
+    SolfeggioFrequencyModulator
+from src.neural_optimization import (cognitive_enhancer, neural_engine,
+                                     pleasure_response_optimizer)
+from src.neural_optimization.dopamine_circuit_mapper import DopamineResponse
+from src.preset.preset_manager import PresetManagerUI
 # Preset system imports
 from src.preset.preset_model import Preset, PresetCategory, PresetTags
 from src.preset.preset_repository import PresetRepository
-from src.preset.preset_manager import PresetManagerUI
-from src.preset.ui_styling import ThemeManager, StyleConstants
+from src.preset.ui_styling import StyleConstants, ThemeManager
+from src.quantum_entrainment import (dimensional_transformer,
+                                     quantum_harmonics, quantum_processor)
+from src.quantum_entrainment.superposition_engine import SuperpositionEngine
+# Internal imports
+from src.sacred_geometry import (fibonacci_sequencer, geometry_engine,
+                                 golden_ratio_transformer)
+from src.sacred_geometry.platonic_solids import (PlatonicSolid,
+                                                 PlatonicTransformer)
+from src.ui.interaction_framework import (UICallback, UIComponentManager,
+                                          UIEventSystem)
+from src.ui.visualization_engine import (SpectrogramVisualizer,
+                                         ThreeDimensionalAudioVisualizer,
+                                         WaveformVisualizer)
+from src.utils.audio_utils import AudioProcessor, FeatureExtractor
+from src.utils.memory_optimization import MemoryOptimizer
+from src.utils.parallel_processor import ParallelTaskProcessor
 
 # Configure logging
 logging.basicConfig(
@@ -445,7 +451,7 @@ class BeatVariation:
     """
     def __init__(self, variation_id: str, algorithm: VariationAlgorithm, 
                  parameters: Dict[str, Any], source_file: str,
-                 intent: Optional<VariationIntent] = None):
+                 intent: Optional<VariationIntent] = None): # type: ignore
         """
         Initialize a new beat variation with extensive metadata and tracking.
         

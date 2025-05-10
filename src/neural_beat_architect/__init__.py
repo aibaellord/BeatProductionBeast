@@ -1,5 +1,7 @@
-from .core.architect import NeuralBeatArchitect
 from src.beat_generation.beat_generator import BeatGenerator
+
+from .core.architect import NeuralBeatArchitect
+
 
 class StyleModel:
     """
@@ -14,6 +16,7 @@ class StyleModel:
         """Retrieve a basic style."""
         return "Default Style"
 
+
 class GrooveAnalyzer:
     """
     Placeholder implementation for the GrooveAnalyzer class.
@@ -26,6 +29,7 @@ class GrooveAnalyzer:
     def analyze_groove(self):
         """Analyze a basic groove."""
         return "Groove analysis complete"
+
 
 class RhythmPattern:
     """

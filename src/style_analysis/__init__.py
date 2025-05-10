@@ -16,18 +16,17 @@ identifying key characteristics, and extracting style-specific features.
 
 from .analyzer import StyleAnalyzer
 from .classifier import GenreClassifier, StyleClassifier
-from .features import StyleFeatureExtractor, GenreFeatures
 from .comparison import StyleComparator
-from .profiles import StyleProfile, GenreProfile
+from .features import GenreFeatures, StyleFeatureExtractor
+from .profiles import GenreProfile, StyleProfile
 
 __all__ = [
-    'StyleAnalyzer',
-    'GenreClassifier',
-    'StyleClassifier',
-    'StyleFeatureExtractor',
-    'GenreFeatures',
-    'StyleComparator',
-    'StyleProfile',
-    'GenreProfile',
+    "StyleAnalyzer",
+    "GenreClassifier",
+    "StyleClassifier",
+    "StyleFeatureExtractor",
+    "GenreFeatures",
+    "StyleComparator",
+    "StyleProfile",
+    "GenreProfile",
 ]
-

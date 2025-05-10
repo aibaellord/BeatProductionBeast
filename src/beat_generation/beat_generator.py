@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import numpy as np
-import math
-from typing import Dict, List, Tuple, Optional, Union, Any
-from enum import Enum
-import random
 import logging
+import math
+import random
+from enum import Enum
+from typing import Any, Dict, List, Optional, Tuple, Union
+
+import numpy as np
 
 # Set up logging
 logger = logging.getLogger(__name__)
+
 
 class PatternType(Enum):
     FIBONACCI = "fibonacci"
@@ -21,6 +23,7 @@ class PatternType(Enum):
     TORUS = "torus"
     SACRED_SPIRAL = "sacred_spiral"
 
+
 class BeatGenerator:
     """
     Enhanced BeatGenerator with additional options for unique and powerful results.
@@ -29,7 +32,11 @@ class BeatGenerator:
     def __init__(self):
         self.styles = ["hip-hop", "jazz", "electronic", "classical"]
         self.advanced_patterns = ["polyrhythms", "syncopation", "triplets"]
-        self.dynamic_variations = ["tempo shifts", "key modulations", "time signature changes"]
+        self.dynamic_variations = [
+            "tempo shifts",
+            "key modulations",
+            "time signature changes",
+        ]
 
     def generate_beat(self, style, pattern, variation):
         """Generate a beat with the specified style, pattern, and variation."""

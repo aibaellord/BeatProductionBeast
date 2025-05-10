@@ -10,7 +10,8 @@ pleasing user interface across desktop and mobile views.
 import json
 import random
 from enum import Enum
-from typing import Dict, List, Tuple, Union, Optional, Any
+from typing import Any, Dict, List, Optional, Tuple, Union
+
 
 # Color definitions as RGBA tuples (R, G, B, A)
 class Colors:

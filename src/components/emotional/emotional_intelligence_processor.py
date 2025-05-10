@@ -1,16 +1,19 @@
-import numpy as np
-import librosa
-import tensorflow as tf
-from enum import Enum, auto
-from dataclasses import dataclass
-from typing import List, Dict, Tuple, Optional, Union, Any
 import json
 import os
-from scipy.signal import butter, filtfilt
-from scipy import stats
+from dataclasses import dataclass
+from enum import Enum, auto
+from typing import Any, Dict, List, Optional, Tuple, Union
 
-from src.preset.quantum_consciousness_engine import QuantumConsciousnessEngine, MultidimensionalAudioFrame
-from src.utils.audio_processing import extract_instrumentals, apply_spectral_processing
+import librosa
+import numpy as np
+import tensorflow as tf
+from scipy import stats
+from scipy.signal import butter, filtfilt
+
+from src.preset.quantum_consciousness_engine import (
+    MultidimensionalAudioFrame, QuantumConsciousnessEngine)
+from src.utils.audio_processing import (apply_spectral_processing,
+                                        extract_instrumentals)
 
 
 class EmotionalDimension(Enum):

@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
-from typing import Optional, Tuple, Dict
+from typing import Dict, Optional, Tuple
+
 
 @dataclass
 class StyleParameters:

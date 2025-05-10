@@ -1,10 +1,10 @@
-import json
-import os
-import math
-import random
 import copy
+import json
+import math
+import os
+import random
 from dataclasses import asdict, fields
-from typing import Dict, List, Optional, Tuple, Union, Any
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 # Assuming StyleParameters is defined in architect.py
 from .architect import StyleParameters
@@ -371,18 +371,20 @@ class StyleFactory:
         """
         tags = [style.
 
-import os
 import json
-import math
-import random
 import logging
-from typing import Dict, List, Optional, Tuple, Union, Any
+import math
+import os
+import random
 from dataclasses import asdict
 from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple, Union
+
 import numpy as np
 
 from src.neural_beat_architect.core.architect import StyleParameters
-from src.neural_processing.sacred_coherence import calculate_phi_ratio, apply_sacred_geometry
+from src.neural_processing.sacred_coherence import (apply_sacred_geometry,
+                                                    calculate_phi_ratio)
 
 logger = logging.getLogger(__name__)
 
@@ -923,16 +925,18 @@ class StyleFactory:
             return None
         
 
+import copy
 import json
 import os
 import random
-import copy
 from dataclasses import asdict
-from typing import Dict, List, Optional, Tuple, Union, Any
-import numpy as np
 from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple, Union
+
+import numpy as np
 
 from .architect import StyleParameters
+
 
 class StyleFactory:
     """
@@ -1292,15 +1296,16 @@ Key features:
 - Generate new styles based on era, culture, or vibe
 """
 
-import os
+import copy
 import json
 import logging
+import os
 import random
-import copy
-import numpy as np
-from typing import Dict, List, Tuple, Union, Optional, Any, Set
 from dataclasses import asdict, is_dataclass
 from pathlib import Path
+from typing import Any, Dict, List, Optional, Set, Tuple, Union
+
+import numpy as np
 
 from .architect import StyleParameters
 
